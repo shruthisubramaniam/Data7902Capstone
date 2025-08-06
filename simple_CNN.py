@@ -6,7 +6,40 @@ import torch
 import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms
+import zipfile
 
+current_dir = os.getcwd()
+
+with zipfile.ZipFile(current_dir + "/train_jpg_scans.zip", 'r') as zip_ref:
+    zip_ref.extractall("train_jpg_scans")
+
+with zipfile.ZipFile(current_dir + "/test_jpg_scans.zip", 'r') as zip_ref:
+    zip_ref.extractall("test_jpg_scans")
+
+with zipfile.ZipFile(current_dir + "/train_masks.zip", 'r') as zip_ref:
+    zip_ref.extractall("train_masks")
+
+with zipfile.ZipFile(current_dir + "/test_masks.zip", 'r') as zip_ref:
+    zip_ref.extractall("test_masks")
+
+# Implement later
+# with zipfile.ZipFile(current_dir + "/new_images.zip", 'r') as zip_ref:
+#     zip_ref.extractall("new_images")
+
+# Getting the paths for training and test set 
+# train_img_dir  = "/content/train/jpg_scans" # Training jpg scans 
+# train_mask_dir = "/content/train/masks" # Training masks 
+# test_img_dir   = "/content/test/jpg_scans" # Testing jpg scans 
+# test_mask_dir  = "/content/test/masks" # Testing masks
+
+train_img_dir  = current_dir + "/train_jpg_scans/jpg_scans" # Training jpg scans 
+train_mask_dir = current_dir + "/train_masks/masks" # Training masks 
+test_img_dir   = current_dir + "/test_jpg_scans/jpg_scans" # Testing jpg scans 
+test_mask_dir  = current_dir + "/test_masks/masks" # Testing masks
+
+model_path   = "simple_segnet.pth"
+new_img_dir  = "/content/new_images"
+out_mask_dir = "/content/predicted_masks"
 
 class RootSegmentationDataset(Dataset):
     """
@@ -129,11 +162,6 @@ class SimpleSegNet(nn.Module):
 
 
 def main():
-    # Getting the paths for training and test set 
-    train_img_dir  = "/content/train/jpg_scans" # Training jpg scans 
-    train_mask_dir = "/content/train/masks" # Training masks 
-    test_img_dir   = "/content/test/jpg_scans" # Testing jpg scans 
-    test_mask_dir  = "/content/test/masks" # Testing masks 
 
     # defining constants 
     batch_size = 8 # Batch size # Amount in each iteration 
@@ -225,13 +253,12 @@ def run_inference(model_path, new_img_dir, out_mask_dir, device='cpu'):
         out_path = os.path.join(out_mask_dir, f"{base}_pred.png")
         Image.fromarray(mask).save(out_path)
 
-# if __name__ == '__main__':
+# Main Function
+if __name__ == '__main__':
 
     main()
 
     model_path   = "simple_segnet.pth"
-    new_img_dir  = "/content/new_images"
-    out_mask_dir = "/content/predicted_masks"
     device       = "cuda" if torch.cuda.is_available() else "cpu"
 
     run_inference(model_path, new_img_dir, out_mask_dir, device)
