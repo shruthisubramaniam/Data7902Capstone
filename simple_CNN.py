@@ -225,7 +225,7 @@ def run_inference(model_path, new_img_dir, out_mask_dir, device='cpu'):
         out_path = os.path.join(out_mask_dir, f"{base}_pred.png")
         Image.fromarray(mask).save(out_path)
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
 
     main()
 
