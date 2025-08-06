@@ -37,7 +37,6 @@ train_mask_dir = current_dir + "/train_masks/masks" # Training masks
 test_img_dir   = current_dir + "/test_jpg_scans/jpg_scans" # Testing jpg scans 
 test_mask_dir  = current_dir + "/test_masks/masks" # Testing masks
 
-model_path   = "simple_segnet.pth"
 new_img_dir  = "/content/new_images"
 out_mask_dir = "/content/predicted_masks"
 
