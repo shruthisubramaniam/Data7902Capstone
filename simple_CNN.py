@@ -10,17 +10,17 @@ import zipfile
 
 current_dir = os.getcwd()
 
-with zipfile.ZipFile(current_dir + "/train_jpg_scans.zip", 'r') as zip_ref:
-    zip_ref.extractall("train_jpg_scans")
+#with zipfile.ZipFile(current_dir + "/train_jpg_scans.zip", 'r') as zip_ref:
+#    zip_ref.extractall("train_jpg_scans")
 
-with zipfile.ZipFile(current_dir + "/test_jpg_scans.zip", 'r') as zip_ref:
-    zip_ref.extractall("test_jpg_scans")
+#with zipfile.ZipFile(current_dir + "/test_jpg_scans.zip", 'r') as zip_ref:
+    #zip_ref.extractall("test_jpg_scans")
 
-with zipfile.ZipFile(current_dir + "/train_masks.zip", 'r') as zip_ref:
-    zip_ref.extractall("train_masks")
+#with zipfile.ZipFile(current_dir + "/train_masks.zip", 'r') as zip_ref:
+    #zip_ref.extractall("train_masks")
 
-with zipfile.ZipFile(current_dir + "/test_masks.zip", 'r') as zip_ref:
-    zip_ref.extractall("test_masks")
+#with zipfile.ZipFile(current_dir + "/test_masks.zip", 'r') as zip_ref:
+    #zip_ref.extractall("test_masks")
 
 # Implement later
 # with zipfile.ZipFile(current_dir + "/new_images.zip", 'r') as zip_ref:
@@ -37,8 +37,8 @@ train_mask_dir = current_dir + "/train_masks/masks" # Training masks
 test_img_dir   = current_dir + "/test_jpg_scans/jpg_scans" # Testing jpg scans 
 test_mask_dir  = current_dir + "/test_masks/masks" # Testing masks
 
-new_img_dir  = "/content/new_images"
-out_mask_dir = "/content/predicted_masks"
+new_img_dir  = "./content/new_images"
+out_mask_dir = "./content/predicted_masks"
 
 class RootSegmentationDataset(Dataset):
     """
@@ -165,11 +165,11 @@ def main():
     # defining constants 
     batch_size = 8 # Batch size # Amount in each iteration 
     lr = 1e-3 # learning rate 
-    epochs = 1 # epochs (number of iterations)
+    epochs = 10 # epochs (number of iterations)
 
     # Resizing all images and masks to become 256x256 
     transform = transforms.Compose([
-        transforms.Resize((256, 256)),
+        transforms.Resize((1024, 1024)),
         transforms.ToTensor(),
     ])
 
